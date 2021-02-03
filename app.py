@@ -75,7 +75,10 @@ def upload():
         preds = model_predict(file_path, model)
 
         # Process your result for human
-        res = np.argmax(model.predict(input_im, 1, verbose = 0), axis=1)
+        res = np.argmax(model.predict(preds, 1, verbose = 0), axis=1)
+        # pred_class = preds.argmax(axis=-1)            # Simple argmax
+        #pr00ed_class = decode_predictions(preds, top=1)   # ImageNet Decode
+        #result = str(pred_class[0][1][2][3][4][5][6][7][8][9])               # Convert to string
         monkey_breeds_dict = {"[0]": "Tomato___Bacterial_spot ", 
                       "[1]": "Tomato___Early_blight",
                       "[2]": "Tomato___healthy",
@@ -86,7 +89,7 @@ def upload():
                       "[7]": "Tomato___Target_Spot",
                       "[8]": "Tomato___Tomato_mosaic_virus",
                       "[9]": "Tomato___Tomato_Yellow_Leaf_Curl_Virus"}
-        monkey = monkey_breeds_dict[str(pred)]             # Convert to string
+        monkey = monkey_breeds_dict[str(res)]             # Convert to string
         return monkey
     return None
 
